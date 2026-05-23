@@ -20,26 +20,37 @@ export default function WaitlistForm() {
   const [clipPeakViews, setClipPeakViews] = useState("");
   const [creatorChannelSize, setCreatorChannelSize] = useState("");
   const [err, setErr] = useState<"" | "name" | "email" | "role" | "proof">("");
+  const [submitting, setSubmitting] = useState(false);
 
-  function submit() {
+  async function submit() {
     if (!name.trim()) { setErr("name"); return; }
     if (!email.trim() || !email.includes("@")) { setErr("email"); return; }
     if (!role) { setErr("role"); return; }
     if (role === "clipper" && !clipPeakViews) { setErr("proof"); return; }
     if (role === "creator" && !creatorChannelSize) { setErr("proof"); return; }
-    setDone(true);
-    const proof =
-      role === "clipper"
-        ? { clipPeakViews }
-        : { creatorChannelSize };
-    console.log("[clipr waitlist]", {
-      name,
-      email,
-      role,
-      ...proof,
-      youtube: youtube.trim() || undefined,
-      instagram: instagram.trim() || undefined,
-    });
+
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          role,
+          youtube: youtube.trim() || undefined,
+          instagram: instagram.trim() || undefined,
+          clipPeakViews: role === "clipper" ? clipPeakViews : undefined,
+          creatorChannelSize: role === "creator" ? creatorChannelSize : undefined,
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setDone(true);
+    } catch {
+      setErr("email"); // reuse field error state to signal generic failure — show nothing extra
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   const optionalFieldStyle: React.CSSProperties = {
@@ -196,9 +207,9 @@ export default function WaitlistForm() {
         <span style={{ color: TEXT_SECONDARY }}>Early beta:</span> 100% of bounties go to clippers.
       </p>
 
-      <button onClick={submit} className="cta-pill accent" style={{ width: "100%", height: 52, justifyContent: "center", fontFamily: "var(--font-montserrat), sans-serif", fontWeight: 700, fontSize: 16 }}>
-        Claim My Spot
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <button onClick={submit} disabled={submitting} className="cta-pill accent" style={{ width: "100%", height: 52, justifyContent: "center", fontFamily: "var(--font-montserrat), sans-serif", fontWeight: 700, fontSize: 16, opacity: submitting ? 0.6 : 1 }}>
+        {submitting ? "Submitting…" : "Claim My Spot"}
+        {!submitting && <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
       </button>
 
       <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16, flexWrap: "wrap" }}>
