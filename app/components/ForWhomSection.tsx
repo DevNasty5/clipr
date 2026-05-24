@@ -90,7 +90,7 @@ const nicheYoutubeVideos: readonly NicheYoutubeClip[][] = [
 
 function YoutubeEmbed({ videoId, title }: { videoId: string; title: string }) {
   const id = toYoutubeEmbedId(videoId);
-  const src = `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`;
+  const src = `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`;
 
   return (
     <div
