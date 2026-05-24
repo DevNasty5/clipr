@@ -8,11 +8,16 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
+  preload: true,
+  fallback: ["system-ui", "sans-serif"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  fallback: ["monospace"],
 });
 
 export const metadata: Metadata = {
@@ -27,6 +32,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Preconnect to YouTube thumbnail CDN for faster image loading */}
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://i.ytimg.com" />
+        {/* Preconnect to YouTube for iframe loading (only when user clicks) */}
+        <link rel="preconnect" href="https://www.youtube-nocookie.com" crossOrigin="anonymous" />
+      </head>
       <body
         className={`${montserrat.variable} ${geistMono.variable} antialiased`}
       >

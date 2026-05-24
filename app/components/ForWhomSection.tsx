@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from "react";
 import { CREAM, GREEN, ORANGE, BORDER, TEXT_SECONDARY, TEXT_MUTED } from "../constants/theme";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { track } from "../lib/mixpanel";
+import YouTubeLite from "./YouTubeLite";
 
 type Props = { isCreator: boolean };
 
@@ -88,76 +89,6 @@ const nicheYoutubeVideos: readonly NicheYoutubeClip[][] = [
   ],
 ];
 
-function YoutubeEmbed({ videoId, title }: { videoId: string; title: string }) {
-  const id = toYoutubeEmbedId(videoId);
-  const src = `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`;
-
-  return (
-    <div
-      style={{
-        minWidth: 0,
-        width: "100%",
-        borderRadius: 12,
-        overflow: "hidden",
-        border: `1px solid ${BORDER}`,
-        background: "#0a0a0a",
-        transition: "border-color .15s",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "#2a2a2a";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = BORDER;
-      }}
-    >
-      {/* Fixed 16:9 box so the iframe always gets height (grid/flex min-width fix) */}
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          paddingBottom: "56.25%",
-          height: 0,
-          overflow: "hidden",
-        }}
-      >
-        <iframe
-          src={src}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            border: "none",
-          }}
-        />
-      </div>
-      <div style={{ padding: "10px 12px", borderTop: `1px solid ${BORDER}` }}>
-        <div
-          style={{
-            fontSize: 12,
-            color: CREAM,
-            fontWeight: 600,
-            lineHeight: 1.35,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical" as const,
-          }}
-        >
-          {title}
-        </div>
-        <div style={{ fontSize: 10, color: TEXT_MUTED, marginTop: 4 }}>YouTube</div>
-      </div>
-    </div>
-  );
-}
 
 const NICHE_PILL_MQ = "(max-width: 900px)";
 const FOR_WHOM_CONTENT_MQ = "(max-width: 768px)";
@@ -463,7 +394,7 @@ export default function ForWhomSection({ isCreator }: Props) {
           }}
         >
           {youtubeClipsToShow.map((clip, i) => (
-            <YoutubeEmbed key={`${active}-${i}-${clip.id}`} videoId={clip.id} title={clip.title} />
+            <YouTubeLite key={`${active}-${i}-${clip.id}`} videoId={toYoutubeEmbedId(clip.id)} title={clip.title} />
           ))}
         </div>
       )}

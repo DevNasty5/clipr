@@ -992,7 +992,7 @@ export default function App() {
         <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 20, letterSpacing: -1, display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ width: 8, height: 8, borderRadius: "50%", background: orange, boxShadow: `0 0 8px ${orange}` }} />clipr
         </div>
-        <p style={{ fontSize: 12, color: "rgba(236,234,245,.2)" }}>© 2025 Clipr · India's Creator Campaign Network</p>
+        <p style={{ fontSize: 12, color: "rgba(236,234,245,.2)" }}>© 2026 Clipr · India's Creator Campaign Network</p>
         <p style={{ fontSize: 12, color: "rgba(236,234,245,.2)" }}>Made with ❤️ in India</p>
       </footer>
     </div>

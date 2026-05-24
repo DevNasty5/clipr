@@ -31,7 +31,7 @@ export default function Footer() {
         clipr
       </div>
       <p style={{ fontSize: 12, color: TEXT_MUTED, margin: 0 }}>
-        © 2025 Clipr · India&apos;s Creator Campaign Network
+        © 2026 Clipr · India&apos;s Creator Campaign Network
       </p>
       <p style={{ fontSize: 12, color: TEXT_MUTED, margin: 0 }}>
         Made with ❤️ in India
