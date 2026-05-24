@@ -2,6 +2,7 @@
 
 import { ORANGE, CREAM, GREEN, BORDER, TEXT_SECONDARY, TEXT_MUTED } from "../constants/theme";
 import { useState } from "react";
+import { track } from "../lib/mixpanel";
 
 const SCALE_OPTIONS = [
   { value: "under_10k", label: "Under 10k" },
@@ -23,12 +24,13 @@ export default function WaitlistForm() {
   const [submitting, setSubmitting] = useState(false);
 
   async function submit() {
-    if (!name.trim()) { setErr("name"); return; }
-    if (!email.trim() || !email.includes("@")) { setErr("email"); return; }
-    if (!role) { setErr("role"); return; }
-    if (role === "clipper" && !clipPeakViews) { setErr("proof"); return; }
-    if (role === "creator" && !creatorChannelSize) { setErr("proof"); return; }
+    if (!name.trim()) { setErr("name"); track("Waitlist Form Error", { field: "name" }); return; }
+    if (!email.trim() || !email.includes("@")) { setErr("email"); track("Waitlist Form Error", { field: "email" }); return; }
+    if (!role) { setErr("role"); track("Waitlist Form Error", { field: "role" }); return; }
+    if (role === "clipper" && !clipPeakViews) { setErr("proof"); track("Waitlist Form Error", { field: "proof", reason: "clipper_views" }); return; }
+    if (role === "creator" && !creatorChannelSize) { setErr("proof"); track("Waitlist Form Error", { field: "proof", reason: "creator_size" }); return; }
 
+    track("Waitlist Form Submitted", { role, hasYoutube: !!youtube.trim(), hasInstagram: !!instagram.trim() });
     setSubmitting(true);
     try {
       const res = await fetch("/api/waitlist", {
@@ -45,9 +47,11 @@ export default function WaitlistForm() {
         }),
       });
       if (!res.ok) throw new Error("Request failed");
+      track("Waitlist Form Success", { role });
       setDone(true);
-    } catch {
-      setErr("email"); // reuse field error state to signal generic failure — show nothing extra
+    } catch (error) {
+      track("Waitlist Form API Error", { role, error: String(error) });
+      setErr("email");
     } finally {
       setSubmitting(false);
     }

@@ -4,6 +4,7 @@ import { ORANGE, GREEN, TEXT_MUTED, CREAM, BORDER } from "../constants/theme";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { track } from "../lib/mixpanel";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -11,6 +12,7 @@ export default function MidCTA({ isCreator }: { isCreator: boolean }) {
   const ref = useScrollReveal();
 
   const handleClick = () => {
+    track("CTA Clicked", { location: "mid-page", action: isCreator ? "get_early_access" : "start_earning" });
     gsap.to(window, {
       duration: 1,
       ease: "power3.inOut",

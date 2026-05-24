@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BG, CREAM } from "../constants/theme";
+import { track } from "../lib/mixpanel";
 import NavBar from "./NavBar";
 import Hero from "./Hero";
 import ForWhomSection from "./ForWhomSection";
@@ -18,6 +19,10 @@ import Footer from "./Footer";
 export default function Landing() {
   const [role, setRole] = useState<"creator" | "clipper">("creator");
   const isCreator = role === "creator";
+
+  useEffect(() => {
+    track("Page Viewed", { page: "landing" });
+  }, []);
 
   return (
     <div

@@ -5,6 +5,7 @@ import { BORDER, TEXT_PRIMARY, TEXT_SECONDARY, ORANGE } from "../constants/theme
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { track } from "../lib/mixpanel";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -20,6 +21,7 @@ export default function NavBar() {
   }, []);
 
   const handleScrollToWaitlist = () => {
+    track("CTA Clicked", { location: "navbar", action: "join_waitlist" });
     gsap.to(window, {
       duration: 1,
       ease: "power3.inOut",

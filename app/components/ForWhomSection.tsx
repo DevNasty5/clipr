@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import { CREAM, GREEN, ORANGE, BORDER, TEXT_SECONDARY, TEXT_MUTED } from "../constants/theme";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { track } from "../lib/mixpanel";
 
 type Props = { isCreator: boolean };
 
@@ -406,7 +407,10 @@ export default function ForWhomSection({ isCreator }: Props) {
               key={ni.label}
               type="button"
               className="niche-pill-btn"
-              onClick={() => setActive(i)}
+              onClick={() => {
+                track("Niche Tab Clicked", { niche: ni.label, role: isCreator ? "creator" : "clipper" });
+                setActive(i);
+              }}
               style={{
                 flex: "0 0 auto",
                 minWidth: compactNichePills ? 64 : 100,

@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CREAM, GREEN, ORANGE, BG, TEXT_SECONDARY, TEXT_MUTED, BORDER } from "../constants/theme";
+import { track } from "../lib/mixpanel";
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
@@ -18,6 +19,7 @@ export default function Hero({ role, onRoleChange }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
 
   const handleScrollToWaitlist = () => {
+    track("CTA Clicked", { location: "hero", action: "join_waitlist" });
     gsap.to(window, {
       duration: 1,
       ease: "power3.inOut",
@@ -92,7 +94,10 @@ export default function Hero({ role, onRoleChange }: Props) {
         ].map((r) => (
           <button
             key={r.id}
-            onClick={() => onRoleChange(r.id)}
+            onClick={() => {
+              track("Role Toggled", { role: r.id });
+              onRoleChange(r.id);
+            }}
             style={{
               padding: "10px 24px",
               borderRadius: 50,
@@ -195,6 +200,7 @@ export default function Hero({ role, onRoleChange }: Props) {
         </button>
         <a
           href="#how-it-works"
+          onClick={() => track("CTA Clicked", { location: "hero", action: "see_how_it_works" })}
           className="cta-pill"
           style={{
             fontSize: 14,
