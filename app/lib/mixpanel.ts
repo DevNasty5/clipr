@@ -1,34 +1,45 @@
-import mixpanel from "mixpanel-browser";
+// Simple server-side tracking wrapper
+let deviceId: string | null = null;
 
-let initialized = false;
+const getDeviceId = () => {
+  if (typeof window === "undefined") return null;
+
+  if (!deviceId) {
+    deviceId = localStorage.getItem("mixpanel_device_id");
+    if (!deviceId) {
+      deviceId = `device_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      localStorage.setItem("mixpanel_device_id", deviceId);
+    }
+  }
+
+  return deviceId;
+};
 
 export const initMixpanel = () => {
-  if (typeof window === "undefined" || initialized) return;
-  const token = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
-  if (!token) {
-    console.warn("Mixpanel token not found");
-    return;
+  if (typeof window !== "undefined") {
+    getDeviceId();
   }
-  mixpanel.init(token, {
-    autocapture: true,
-    record_sessions_percent: 100,
-    api_host: "https://api-eu.mixpanel.com",
-  });
-  initialized = true;
 };
 
-export const track = (event: string, properties?: Record<string, any>) => {
+export const track = async (event: string, properties?: Record<string, any>) => {
   if (typeof window === "undefined") return;
-  if (!initialized) {
-    initMixpanel();
-    if (!initialized) return; // Still not initialized (no token)
+
+  try {
+    await fetch("/api/track", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        event,
+        properties: {
+          distinct_id: getDeviceId(),
+          ...properties,
+        },
+      }),
+    });
+  } catch (error) {
+    console.error("Failed to track event:", error);
   }
-  mixpanel.track(event, properties);
 };
 
-export const setUserProperties = (properties: Record<string, any>) => {
-  if (typeof window === "undefined") return;
-  if (!initialized) initMixpanel();
-  if (!initialized) return;
-  mixpanel.register(properties);
-};

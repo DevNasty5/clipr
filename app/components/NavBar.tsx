@@ -88,6 +88,7 @@ export default function NavBar() {
       >
         {/* Logo */}
         <div
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           style={{
             fontFamily: "var(--font-montserrat), sans-serif",
             fontWeight: 800,
@@ -98,6 +99,7 @@ export default function NavBar() {
             gap: 7,
             color: TEXT_PRIMARY,
             flexShrink: 0,
+            cursor: "pointer",
           }}
         >
           <div style={{ width: 6, height: 6, borderRadius: "50%", background: ORANGE }} />
