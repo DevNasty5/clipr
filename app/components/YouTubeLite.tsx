@@ -86,6 +86,13 @@ export default function YouTubeLite({ videoId, title }: Props) {
       onClick={() => setIsIframeLoaded(true)}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLDivElement).style.borderColor = "#2a2a2a";
+        if (!document.querySelector('link[href="https://www.youtube-nocookie.com"]')) {
+          const link = document.createElement("link");
+          link.rel = "preconnect";
+          link.href = "https://www.youtube-nocookie.com";
+          link.crossOrigin = "anonymous";
+          document.head.appendChild(link);
+        }
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLDivElement).style.borderColor = BORDER;
@@ -109,7 +116,6 @@ export default function YouTubeLite({ videoId, title }: Props) {
           style={{
             objectFit: "cover",
           }}
-          priority={false}
         />
         <div
           style={{

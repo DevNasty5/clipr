@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import Landing from "./components/Landing";
 
 export const metadata: Metadata = {
-  title: "Clipr – Get Verified Views on Reels, Shorts & Moj | India",
+  title: "Clipr – Get Verified Views on Reels and Shorts | India",
   description:
-    "Clipr connects Indian creators with verified clippers who post your content on Reels, Shorts, and Moj. Pay only for real, bot-free views. UPI payouts every Friday. Join the waitlist.",
+    "Clipr connects Indian creators with verified clippers who post your content on Reels and Shorts. Pay only for real, bot-free views. UPI payouts every Friday. Join the waitlist.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Clipr – Get Verified Views on Reels, Shorts & Moj | India",
+    title: "Clipr – Get Verified Views on Reels and Shorts | India",
     description:
-      "Clippers post your content across Reels, Shorts & Moj. Pay only for verified, bot-free views. INR payouts via UPI every Friday. India's first creator campaign network.",
+      "Clippers post your content across Reels and Shorts. Pay only for verified, bot-free views. India's first creator campaign network.",
     url: "/",
     siteName: "Clipr",
     images: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Clipr – India's creator campaign network for verified views on Reels, Shorts and Moj",
+        alt: "Clipr – India's creator campaign network for verified views on Reels and Shorts",
       },
     ],
     locale: "en_IN",
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clipr – Get Verified Views on Reels, Shorts & Moj | India",
+    title: "Clipr – Get Verified Views on Reels and Shorts | India",
     description:
-      "Clippers post your content across Reels, Shorts & Moj. Pay only for verified, bot-free views. INR payouts via UPI every Friday.",
+      "Clippers post your content across Reels and Shorts. Pay only for verified, bot-free views. INR payouts via UPI every Friday.",
     images: ["/og.png"],
   },
 };

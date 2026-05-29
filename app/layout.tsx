@@ -23,11 +23,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://cliprin.vercel.app"),
   title: {
-    default: "Clipr – Get Verified Views on Reels, Shorts & Moj | India",
+    default: "Clipr – Get Verified Views on Reels and Shorts | India",
     template: "%s | Clipr",
   },
   description:
-    "Clipr connects Indian creators with verified clippers who post your content on Reels, Shorts, and Moj. Pay only for real, bot-free views. UPI payouts every Friday. Join the waitlist.",
+    "Clipr connects Indian creators with verified clippers who post your content on Reels and Shorts. Pay only for real, bot-free views. Join the waitlist.",
   keywords: [
     // what creators search for
     "get more views on reels India",
@@ -72,11 +72,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preconnect to YouTube thumbnail CDN for faster image loading */}
-        <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
-        {/* Preconnect to YouTube for iframe loading (only when user clicks) */}
-        <link rel="preconnect" href="https://www.youtube-nocookie.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.youtube-nocookie.com" />
       </head>
       <body
         className={`${montserrat.variable} ${geistMono.variable} antialiased`}
@@ -91,12 +88,12 @@ export default function RootLayout({
               url: "https://cliprin.vercel.app",
               logo: "https://cliprin.vercel.app/og.png",
               description:
-                "India's first creator campaign network. Creators pay for verified views; clippers earn by posting short clips.",
-              foundingLocation: {
-                "@type": "Place",
-                addressCountry: "IN",
+                "India's first creator campaign network. Creators pay for verified views and clippers earn by posting short viral clips.",
+              areaServed: {
+                "@type": "Country",
+                name: "India",
               },
-            }),
+            }).replace(/</g, "\\u003c"),
           }}
         />
         <MixpanelInit />

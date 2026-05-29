@@ -1,10 +1,6 @@
-# Modern browsers only - reduces polyfills significantly
-# This targets the last 2 versions of major browsers that support ES2020+
-
->0.2%
+chrome >= 90
+edge >= 90
+firefox >= 90
+safari >= 15
 not dead
 not op_mini all
-chrome >= 87
-edge >= 88
-firefox >= 78
-safari >= 14
