@@ -9,7 +9,7 @@ export default function WaitlistSection() {
 
   return (
     <section
-      ref={sectionRef as any}
+      ref={sectionRef}
       id="waitlist"
       className="landing-section-pad--waitlist"
       style={{ position: "relative", overflow: "hidden" }}
@@ -45,7 +45,7 @@ export default function WaitlistSection() {
         </p>
 
         {/* Form card */}
-        <div className="antigrid-card" style={{ padding: "32px 28px", textAlign: "left" }}>
+        <div className="antigrid-card no-hover" style={{ padding: "32px 28px", textAlign: "left" }}>
           {/* Top accent line */}
           <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "45%", height: 1, background: `linear-gradient(90deg,transparent,${ORANGE},transparent)` }} />
           <WaitlistForm />

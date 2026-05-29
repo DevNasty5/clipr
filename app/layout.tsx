@@ -21,8 +21,47 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Clipr – India-first Creator Campaign Network",
-  description: "Early access waitlist for Clipr – pay for verified views, not edits.",
+  metadataBase: new URL("https://cliprin.vercel.app"),
+  title: {
+    default: "Clipr – Get Verified Views on Reels, Shorts & Moj | India",
+    template: "%s | Clipr",
+  },
+  description:
+    "Clipr connects Indian creators with verified clippers who post your content on Reels, Shorts, and Moj. Pay only for real, bot-free views. UPI payouts every Friday. Join the waitlist.",
+  keywords: [
+    // what creators search for
+    "get more views on reels India",
+    "promote YouTube channel India",
+    "content distribution India",
+    "verified views India",
+    "pay per view marketing India",
+    "short video promotion India",
+    "grow Instagram reels India",
+    "YouTube Shorts promotion India",
+
+    // what clippers/editors search for
+    "earn money posting reels India",
+    "get paid to post short videos",
+    "clipper network India",
+    "earn from editing videos India",
+    "UPI payout content creator",
+
+    // product/category terms
+    "creator campaign network",
+    "UGC clip distribution",
+    "bot-free views platform",
+    "influencer clip network India",
+    "Moj content promotion",
+    "creator marketing platform India",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
@@ -42,6 +81,24 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Clipr",
+              url: "https://cliprin.vercel.app",
+              logo: "https://cliprin.vercel.app/og.png",
+              description:
+                "India's first creator campaign network. Creators pay for verified views; clippers earn by posting short clips.",
+              foundingLocation: {
+                "@type": "Place",
+                addressCountry: "IN",
+              },
+            }),
+          }}
+        />
         <MixpanelInit />
         {children}
       </body>

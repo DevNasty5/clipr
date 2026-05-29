@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BORDER, TEXT_PRIMARY, TEXT_SECONDARY, ORANGE } from "../constants/theme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { gsap } from "gsap";
+import Link from "next/link";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { track } from "../lib/mixpanel";
 
@@ -87,24 +88,26 @@ export default function NavBar() {
         }}
       >
         {/* Logo */}
-        <div
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          style={{
-            fontFamily: "var(--font-montserrat), sans-serif",
-            fontWeight: 800,
-            fontSize: 16,
-            letterSpacing: -0.8,
-            display: "flex",
-            alignItems: "center",
-            gap: 7,
-            color: TEXT_PRIMARY,
-            flexShrink: 0,
-            cursor: "pointer",
-          }}
-        >
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: ORANGE }} />
-          clipr
-        </div>
+        <Link href="/" style={{ textDecoration: "none" }}>
+          <div
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            style={{
+              fontFamily: "var(--font-montserrat), sans-serif",
+              fontWeight: 800,
+              fontSize: 16,
+              letterSpacing: -0.8,
+              display: "flex",
+              alignItems: "center",
+              gap: 7,
+              color: TEXT_PRIMARY,
+              flexShrink: 0,
+              cursor: "pointer",
+            }}
+          >
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: ORANGE }} />
+            clipr
+          </div>
+        </Link>
 
         {/* Nav links — scroll on narrow widths so bar never overflows */}
         <div

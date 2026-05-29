@@ -109,7 +109,7 @@ export default function WaitlistForm() {
         <input type="email" placeholder="Email or WhatsApp number" value={email} onChange={(e) => { setEmail(e.target.value); setErr(""); }} style={fieldStyle("email")} />
       </div>
       <div style={{ marginBottom: 6 }}>
-        <div style={{ fontSize: 11, fontWeight: 600, color: TEXT_MUTED, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
+        <div style={{ fontSize: 11, fontWeight: 600, color: TEXT_SECONDARY, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
           Your channels <span style={{ fontWeight: 500, textTransform: "none", letterSpacing: "normal", color: TEXT_SECONDARY }}>(optional)</span>
         </div>
         <div style={{ marginBottom: 8 }}>
@@ -139,70 +139,105 @@ export default function WaitlistForm() {
         </p>
       </div>
       <div style={{ marginBottom: 10 }}>
-        <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: TEXT_MUTED, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
+        <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: TEXT_SECONDARY, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
           Joining as
         </label>
-        <select
-          value={role}
-          onChange={(e) => {
-            const v = e.target.value as "" | "creator" | "clipper";
-            setRole(v);
-            setClipPeakViews("");
-            setCreatorChannelSize("");
-            setErr("");
-          }}
-          style={{ ...fieldStyle("role"), WebkitAppearance: "none", cursor: "pointer", color: role ? CREAM : TEXT_MUTED }}
-        >
-          <option value="" disabled>Select one…</option>
-          <option value="creator">Creator / brand — I publish original content</option>
-          <option value="clipper">Clipper — I edit &amp; post short clips</option>
-        </select>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, border: `2px solid ${err === "role" ? "rgba(255,71,88,0.5)" : BORDER}`, borderRadius: 10, padding: 4, background: "#171717", boxShadow: err === "role" ? "0 0 0 3px rgba(255,71,88,0.08)" : "none" }}>
+          {(["creator", "clipper"] as const).map((r) => (
+            <button
+              key={r}
+              type="button"
+              onClick={() => { setRole(r); setClipPeakViews(""); setCreatorChannelSize(""); setErr(""); }}
+              style={{
+                padding: "10px 8px",
+                borderRadius: 7,
+                border: "none",
+                cursor: "pointer",
+                fontFamily: "var(--font-montserrat), sans-serif",
+                fontSize: 13,
+                fontWeight: 600,
+                transition: "background 0.15s, color 0.15s",
+                background: role === r ? ORANGE : "transparent",
+                color: role === r ? "#000" : TEXT_SECONDARY,
+              }}
+            >
+              {r === "creator" ? "Creator / Brand" : "Clipper"}
+            </button>
+          ))}
+        </div>
+        {err === "role" && <p style={{ fontSize: 11, color: "rgba(255,71,88,0.8)", margin: "6px 0 0" }}>Please select a role to continue.</p>}
       </div>
 
       {role === "clipper" && (
         <div style={{ marginBottom: 14 }}>
-          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: TEXT_MUTED, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
+          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: TEXT_SECONDARY, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
             Proof of skill
           </label>
           <p style={{ fontSize: 12, color: TEXT_SECONDARY, lineHeight: 1.5, margin: "0 0 8px" }}>
             What&apos;s the most views a <strong style={{ color: CREAM, fontWeight: 600 }}>single clip</strong> of yours has ever gotten?
           </p>
-          <select
-            value={clipPeakViews}
-            onChange={(e) => { setClipPeakViews(e.target.value); setErr(""); }}
-            style={{ ...fieldStyle("proof"), WebkitAppearance: "none", cursor: "pointer", color: clipPeakViews ? CREAM : TEXT_MUTED }}
-          >
-            <option value="" disabled>Choose your best-performing clip…</option>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, border: `2px solid ${err === "proof" ? "rgba(255,71,88,0.5)" : BORDER}`, borderRadius: 10, padding: 4, background: "#171717", boxShadow: err === "proof" ? "0 0 0 3px rgba(255,71,88,0.08)" : "none" }}>
             {SCALE_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => { setClipPeakViews(o.value); setErr(""); }}
+                style={{
+                  padding: "10px 8px",
+                  borderRadius: 7,
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: "var(--font-montserrat), sans-serif",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  transition: "background 0.15s, color 0.15s",
+                  background: clipPeakViews === o.value ? ORANGE : "transparent",
+                  color: clipPeakViews === o.value ? "#000" : TEXT_SECONDARY,
+                }}
+              >
+                {o.label}
+              </button>
             ))}
-          </select>
+          </div>
           <p style={{ fontSize: 11, color: TEXT_MUTED, margin: "8px 0 0", lineHeight: 1.45 }}>
-            We invite the strongest clippers first — 1M+ cohort gets beta access earliest.
+            We invite the strongest clippers first - 1M+ cohort gets beta access earliest.
           </p>
         </div>
       )}
 
       {role === "creator" && (
         <div style={{ marginBottom: 14 }}>
-          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: TEXT_MUTED, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
+          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: TEXT_SECONDARY, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
             Your reach
           </label>
           <p style={{ fontSize: 12, color: TEXT_SECONDARY, lineHeight: 1.5, margin: "0 0 8px" }}>
-            Roughly how many <strong style={{ color: CREAM, fontWeight: 600 }}>subscribers or followers</strong> does your main channel have today?
+            Roughly how many <strong style={{ color: CREAM, fontWeight: 600 }}>subscribers or followers</strong> does your channel has?
           </p>
-          <select
-            value={creatorChannelSize}
-            onChange={(e) => { setCreatorChannelSize(e.target.value); setErr(""); }}
-            style={{ ...fieldStyle("proof"), WebkitAppearance: "none", cursor: "pointer", color: creatorChannelSize ? CREAM : TEXT_MUTED }}
-          >
-            <option value="" disabled>Choose the closest range…</option>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, border: `2px solid ${err === "proof" ? "rgba(255,71,88,0.5)" : BORDER}`, borderRadius: 10, padding: 4, background: "#171717", boxShadow: err === "proof" ? "0 0 0 3px rgba(255,71,88,0.08)" : "none" }}>
             {SCALE_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => { setCreatorChannelSize(o.value); setErr(""); }}
+                style={{
+                  padding: "10px 8px",
+                  borderRadius: 7,
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: "var(--font-montserrat), sans-serif",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  transition: "background 0.15s, color 0.15s",
+                  background: creatorChannelSize === o.value ? ORANGE : "transparent",
+                  color: creatorChannelSize === o.value ? "#000" : TEXT_SECONDARY,
+                }}
+              >
+                {o.label}
+              </button>
             ))}
-          </select>
+          </div>
           <p style={{ fontSize: 11, color: TEXT_MUTED, margin: "8px 0 0", lineHeight: 1.45 }}>
-            Larger channels get priority for early creator seats — we match bounty supply to demand.
+            Larger channels get priority for early creator seats.
           </p>
         </div>
       )}

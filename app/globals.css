@@ -101,6 +101,14 @@ body {
   background: #1a1a1a;
 }
 
+.antigrid-card.no-hover {
+  cursor: default;
+}
+
+.antigrid-card.no-hover:hover {
+  background: #141414;
+}
+
 /* Hover arrow slides in */
 .antigrid-card .card-arrow {
   position: absolute;

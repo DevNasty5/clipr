@@ -1,6 +1,6 @@
 "use client";
 
-import { ORANGE, CREAM, BORDER, TEXT_MUTED } from "../constants/theme";
+import { ORANGE, CREAM, BORDER, TEXT_SECONDARY } from "../constants/theme";
 
 export default function Footer() {
   return (
@@ -30,10 +30,10 @@ export default function Footer() {
         <div style={{ width: 7, height: 7, borderRadius: "50%", background: ORANGE }} />
         clipr
       </div>
-      <p style={{ fontSize: 12, color: TEXT_MUTED, margin: 0 }}>
+      <p style={{ fontSize: 12, color: TEXT_SECONDARY, margin: 0 }}>
         © 2026 Clipr · India&apos;s Creator Campaign Network
       </p>
-      <p style={{ fontSize: 12, color: TEXT_MUTED, margin: 0 }}>
+      <p style={{ fontSize: 12, color: TEXT_SECONDARY, margin: 0 }}>
         Made with ❤️ in India
       </p>
     </footer>
